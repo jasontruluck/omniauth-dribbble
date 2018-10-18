@@ -43,8 +43,6 @@ module OmniAuth
         @raw_info ||= access_token.get('/user').parsed
       end
 
-      private
-
       def api_version
         ENV['DRIBBBLE_API_VERSION'] || '2'
       end
