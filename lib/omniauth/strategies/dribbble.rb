@@ -4,7 +4,7 @@ module OmniAuth
   module Strategies
     class Dribbble < OmniAuth::Strategies::OAuth2
       option :client_options, {
-        site: "https://api.dribbble.com/v2",
+        site: "https://api.dribbble.com",
         authorize_url: 'https://dribbble.com/oauth/authorize',
         token_url: 'https://dribbble.com/oauth/token'
       }
@@ -40,7 +40,13 @@ module OmniAuth
       end
 
       def raw_info
-        @raw_info ||= access_token.get('/user').parsed
+        @raw_info ||= access_token.get('/v2/user').parsed
+      end
+
+      protected
+
+      def build_access_token
+        client.auth_code.get_token(request.params['code'])
       end
     end
   end
